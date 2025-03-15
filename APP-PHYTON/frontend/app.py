@@ -322,18 +322,3 @@ class SistemaCirculatorioApp(QMainWindow):
             {"".join(f'<li>Pregunta: {respuesta["texto_pregunta"]}, Respuesta: {respuesta["respuesta"]}</li>' for respuesta in consulta["respuestas"])}
         </ul>
         """
-
-
-class SistemaCirculatorio:
-    def __init__(self):
-        self.app = QApplication(sys.argv)
-        self.window = SistemaCirculatorioApp()
-
-    def run(self):
-        self.window.show()
-        sys.exit(self.app.exec())
-
-
-if __name__ == "__main__":
-    sistema = SistemaCirculatorio()
-    sistema.run()
