@@ -1,7 +1,7 @@
 from PyQt6.QtWidgets import QApplication
 from login import LoginUser
-from paciente.main import PacienteApp
-from medico.main import MedicoApp
+from paciente.main_paciente import PacienteApp
+from medico.main_medico import MedicoApp
 
 def on_login_success(username):
     global ventana_principal

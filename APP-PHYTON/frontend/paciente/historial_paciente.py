@@ -35,10 +35,13 @@ class HistorialApp(QWidget):
         layout.addWidget(self.label_preguntas)
         layout.addWidget(self.input_preguntas)
 
-        # Botón para cerrar
-        self.boton_cerrar = QPushButton("Cerrar")
+        self.boton_cerrar = QPushButton("Volver")
         self.boton_cerrar.clicked.connect(self.close)
         layout.addWidget(self.boton_cerrar)
+      
+        self.boton_guardar = QPushButton("Guardar")
+        self.boton_guardar.clicked.connect(self.guardar_datos)
+        layout.addWidget(self.boton_guardar)
 
         self.setLayout(layout)
 
@@ -51,6 +54,9 @@ class HistorialApp(QWidget):
                 self.setStyleSheet(file.read())  
         except Exception as e:
             print(f"Error al cargar los estilos: {e}")
+            
+    def guardar_datos(self):
+        print("Datos guardados correctamente")
 
 if __name__ == "__main__":
     import sys
