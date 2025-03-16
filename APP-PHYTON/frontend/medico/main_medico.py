@@ -1,12 +1,16 @@
-from PyQt6.QtWidgets import QApplication, QWidget, QVBoxLayout, QLabel, QPushButton, QListWidget
+from PyQt6.QtWidgets import (
+    QApplication, QWidget, QVBoxLayout, QLabel, QPushButton, QListWidget
+)
 from PyQt6.QtCore import Qt
 from medico.reglas_medico import SistemaReglas
+import os
 from medico.seguimiento_medico import SeguimientoPacientes
 
 class MedicoApp(QWidget):
     def __init__(self):
         super().__init__()
         self.initUI()
+        self.apply_styles()
     
     def initUI(self):
         self.setWindowTitle("Panel del Médico")
@@ -35,6 +39,16 @@ class MedicoApp(QWidget):
 
         self.setLayout(layout)
 
+    def apply_styles(self):
+        frontend_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
+        style_path = os.path.join(frontend_dir, "styles.qss")
+
+        try:
+            with open(style_path, "r") as file:
+                self.setStyleSheet(file.read())  
+        except Exception as e:
+            print(f"Error al cargar los estilos: {e}")
+
     def cargar_pacientes(self):
         pacientes = ["Paciente 1", "Paciente 2", "Paciente 3"] 
         self.lista_pacientes.addItems(pacientes)
@@ -47,6 +61,7 @@ class MedicoApp(QWidget):
         reglas = SistemaReglas()
         reglas.generar_reporte()
         print("Reporte generado exitosamente.")  
+        
 if __name__ == "__main__":
     import sys
     app = QApplication(sys.argv)
