@@ -50,12 +50,12 @@ class MedicoApp(QWidget):
             print(f"Error al cargar los estilos: {e}")
 
     def cargar_pacientes(self):
-        pacientes = ["Paciente 1", "Paciente 2", "Paciente 3"] 
+        pacientes = ["Nicolas Hamburger", "Omar T", "Jenifer Martinez"] 
         self.lista_pacientes.addItems(pacientes)
 
     def ver_seguimiento(self):
-        self.seguimiento = SeguimientoPacientes()
-        self.seguimiento.show()
+         self.seguimiento = SeguimientoPacientes()
+         self.seguimiento.show()
 
     def generar_reportes(self):
         reglas = SistemaReglas()
