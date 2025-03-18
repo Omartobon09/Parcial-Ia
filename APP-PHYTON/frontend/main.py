@@ -3,15 +3,15 @@ from login import LoginUser
 from paciente.main_paciente import PacienteApp
 from medico.main_medico import MedicoApp
 
-def on_login_success(username):
+def on_login_success(username, rol_id):
     global ventana_principal
 
-    if username == "pac":
+    if rol_id == 2:  # Paciente
         ventana_principal = PacienteApp()
-    elif username == "doc":
+    elif rol_id == 1:  # Médico
         ventana_principal = MedicoApp()
     else:
-        print("Usuario no válido") 
+        print("Rol no válido")
         return
 
     ventana_principal.show()

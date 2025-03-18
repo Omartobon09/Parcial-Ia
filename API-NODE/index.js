@@ -1,52 +1,34 @@
-const express = require('express');
-const bodyParser = require('body-parser');
-const UsuarioService = require('./services/usuarioService');
-const ConsultaService = require('./services/consultaService');
-const RulesEngine = require('./rulesEngine');
+const express = require("express");
+const cors = require("cors");
+const dotenv = require("dotenv");
+const authRoutes = require('./routes/auth.routes'); // Importa las rutas de autenticación
+const diagnosticoRoutes = require('./routes/diagnostico.routes');
+const { testConnection } = require("./config/database");
 
+// Cargar variables de entorno
+dotenv.config();
+
+// Crear la aplicación Express
 const app = express();
-const port = 8000;
 
-app.use(bodyParser.json());
+// Middleware
+app.use(cors());
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
-const usuarioService = new UsuarioService();
-const consultaService = new ConsultaService();
+// Rutas
+app.use('/api/auth', authRoutes); // Agregar rutas de autenticación
+app.use('/api', diagnosticoRoutes);
 
+// Ruta de prueba
 app.get('/', (req, res) => {
-  res.json({ message: 'Bienvenido a la API del Sistema de Diagnóstico Circulatorio' });
+  res.send('API de Centro Médico funcionando correctamente');
 });
 
-app.post('/usuarios/', async (req, res) => {
-  const usuarioExistente = await usuarioService.buscarUsuarioPorIdentificacion(req.body.identificacion);
-  if (usuarioExistente) {
-    res.json({ id: usuarioExistente.id, message: 'Usuario ya existe' });
-    return;
-  }
+// Puerto
+const PORT = process.env.PORT || 5000;
 
-  const usuarioId = await usuarioService.crearUsuario(req.body);
-  res.status(201).json({ id: usuarioId, message: 'Usuario creado exitosamente' });
-});
-
-app.post('/consultas/', async (req, res) => {
-  const consultaId = await consultaService.crearConsulta(req.body);
-  res.status(201).json({ id: consultaId, message: 'Consulta registrada exitosamente' });
-});
-
-app.get('/consultas/todas/', async (req, res) => {
-  const consultas = await consultaService.obtenerTodasConsultas();
-  res.json(consultas);
-});
-
-app.post('/consultas/buscar/', async (req, res) => {
-  const consultas = await consultaService.buscarConsultas(req.body);
-  res.json(consultas);
-});
-
-app.post('/diagnosticar/', (req, res) => {
-  const diagnostico = RulesEngine.diagnosticar(req.body);
-  res.json({ diagnostico });
-});
-
-app.listen(port, () => {
-  console.log(`Servidor corriendo en http://localhost:${port}`);
+// Iniciar servidor
+app.listen(PORT, () => {
+  console.log(`Servidor corriendo en el puerto ${PORT}`);
 });
