@@ -19,7 +19,7 @@ class PacienteApp(QWidget):
 
         layout = QVBoxLayout()
 
-        self.label_sintomas = QLabel("Describa sus síntomas:")
+        self.label_sintomas = QLabel("Descripcion:")
         self.input_sintomas = QTextEdit()
         layout.addWidget(self.label_sintomas)
         layout.addWidget(self.input_sintomas)

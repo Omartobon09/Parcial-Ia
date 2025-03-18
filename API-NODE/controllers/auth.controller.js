@@ -1,5 +1,4 @@
 const Usuario = require('../models/usuario.js');
-const bcrypt = require('bcrypt');
 
 const login = async (req, res) => {
   try {
@@ -14,7 +13,7 @@ const login = async (req, res) => {
       });
     }
     
-    // Buscar usuario por el campo "usuario" (no email)
+    // Buscar usuario por el campo "usuario"
     const usuarioEncontrado = await Usuario.findOne({ where: { usuario } });
     
     // Si no existe el usuario
@@ -25,7 +24,7 @@ const login = async (req, res) => {
       });
     }
     
-    // Comparar contraseña (asumiendo que bcrypt está instalado)
+    // Comparación directa para contraseñas en texto plano
     const isPasswordValid = contrasena === usuarioEncontrado.contrasena;
     
     if (!isPasswordValid) {
