@@ -90,40 +90,9 @@ class PacienteApp(QWidget):
         sintomas_texto = self.input_sintomas.toPlainText()
 
         sintomas_seleccionados = []
-        if self.check_fiebre.isChecked():
-            sintomas_seleccionados.append("Fiebre")
-        if self.check_tos.isChecked():
-            sintomas_seleccionados.append("Tos")
-        if self.check_dolor_cabeza.isChecked():
-            sintomas_seleccionados.append("Dolor de cabeza")
-        if self.check_cansancio.isChecked():
-            sintomas_seleccionados.append("Cansancio")
-        if self.check_dolor_garganta.isChecked():
-            sintomas_seleccionados.append("Dolor de garganta")
-        if self.check_falta_aire.isChecked():
-            sintomas_seleccionados.append("Falta de aire")
-        if self.check_dolor_muscular.isChecked():
-            sintomas_seleccionados.append("Dolor muscular")
-        if self.check_nauseas.isChecked():
-            sintomas_seleccionados.append("Náuseas")
-        if self.check_perdida_olfato.isChecked():
-            sintomas_seleccionados.append("Pérdida del olfato")
-        if self.check_perdida_gusto.isChecked():
-            sintomas_seleccionados.append("Pérdida del gusto")
-        if self.check_congestion_nasal.isChecked():
-            sintomas_seleccionados.append("Congestión nasal")
-        if self.check_diarrhea.isChecked():
-            sintomas_seleccionados.append("Diarrea")
-        if self.check_dolor_pecho.isChecked():
-            sintomas_seleccionados.append("Dolor en el pecho")
-        if self.check_palpitaciones.isChecked():
-            sintomas_seleccionados.append("Palpitaciones")
-        if self.check_mareos.isChecked():
-            sintomas_seleccionados.append("Mareos")
-        if self.check_hinchazon_piernas.isChecked():
-            sintomas_seleccionados.append("Hinchazón de piernas")
-        if self.check_dificultad_respiratoria.isChecked():
-            sintomas_seleccionados.append("Dificultad respiratoria")
+        for checkbox in self.sintomas_checkboxes:
+            if checkbox.isChecked():
+                sintomas_seleccionados.append(checkbox.text())
 
         if not sintomas_seleccionados:
             QMessageBox.warning(
@@ -166,7 +135,7 @@ class PacienteApp(QWidget):
             return "Síntomas no concluyentes", "Consulte a un médico para un diagnóstico preciso"
 
     def enviar_diagnostico_api(self, descripcion, recomendacion):
-        url = "http://localhost:5000/enviardiagnostico"
+        url = "http://127.0.0.1:5000/api/enviardiagnostico"
         data = {
             "descripcion": descripcion,
             "recomendacion": recomendacion

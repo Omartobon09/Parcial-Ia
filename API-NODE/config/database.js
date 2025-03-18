@@ -1,10 +1,11 @@
+
 const { Sequelize } = require("sequelize");
 const dotenv = require("dotenv");
 
-// Cargar variables de entorno
+
 dotenv.config();
 
-// Configuración de Sequelize
+
 const sequelize = new Sequelize(
   process.env.DB_NAME || "centro_medico_db",
   process.env.DB_USER || "root",
@@ -12,11 +13,11 @@ const sequelize = new Sequelize(
   {
     host: process.env.DB_HOST || "localhost",
     dialect: "mysql",
-    logging: false, // Desactiva logs de SQL en la consola
+    logging: false, 
   }
 );
 
-// Función para probar la conexión
+
 async function testConnection() {
   try {
     await sequelize.authenticate();
@@ -28,5 +29,5 @@ async function testConnection() {
   }
 }
 
-// Exportar Sequelize y la función de prueba
+
 module.exports = { sequelize, testConnection };

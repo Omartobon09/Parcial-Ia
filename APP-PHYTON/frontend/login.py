@@ -5,14 +5,14 @@ from PyQt6.QtGui import QFont
 
 
 class LoginUser(QWidget):
-    loginSuccess = pyqtSignal(str, int)  # Emitimos el usuario y el rol_id
+    loginSuccess = pyqtSignal(str, int)  
 
     def __init__(self, on_login_success_callback):
         super().__init__()
 
         self.on_login_success = on_login_success_callback
 
-        # Configuración UI
+        
         self.setWindowTitle("Inicio de Sesión")
         self.setMinimumSize(400, 450)
         self.setup_ui()
@@ -21,13 +21,13 @@ class LoginUser(QWidget):
         main_layout = QVBoxLayout()
         self.setLayout(main_layout)
 
-        # Logo
+        
         logo_label = QLabel("SISTEMA MÉDICO")
         logo_label.setFont(QFont("Segoe UI", 18, QFont.Weight.Bold))
         logo_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
         main_layout.addWidget(logo_label)
 
-        # Grupo de login
+        
         login_group = QGroupBox("Credenciales")
         login_layout = QFormLayout()
         login_group.setLayout(login_layout)
@@ -46,12 +46,12 @@ class LoginUser(QWidget):
 
         main_layout.addWidget(login_group)
 
-        # Mensaje de error
+        
         self.error_label = QLabel("")
         self.error_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
         main_layout.addWidget(self.error_label)
 
-        # Botón de login
+        
         self.login_button = QPushButton("INICIAR SESIÓN")
         self.login_button.clicked.connect(self.validate_login)
         main_layout.addWidget(self.login_button)
@@ -67,7 +67,7 @@ class LoginUser(QWidget):
             self.error_label.setText("Ingrese usuario y contraseña")
             return
 
-        # Enviar solicitud a la API
+    
         api_url = "http://localhost:5000/api/auth/login"
         data = {"usuario": username, "contrasena": password}
 
@@ -75,8 +75,8 @@ class LoginUser(QWidget):
             response = requests.post(api_url, json=data)
             if response.status_code == 200:
                 result = response.json()
-                user_data = result.get("user", {})  # Extraemos el objeto "user"
-                user_role = user_data.get("rol_id")  # Obtenemos el rol_id
+                user_data = result.get("user", {})  
+                user_role = user_data.get("rol_id") 
 
                 if user_role is not None:
                     self.error_label.setText("")
