@@ -3,7 +3,7 @@ const bcrypt = require('bcrypt');
 
 
 exports.getAllUsuarios = (req, res) => {
-  connection.query('SELECT id, nombre, apellido, usuario, rol_id, fecha_registro FROM centro_medico_db_usuarios', (error, results) => {
+  connection.query('SELECT id, nombre, apellido, usuario, rol_id, fecha_registro FROM usuarios', (error, results) => {
     if (error) {
       return res.status(500).json({
         status: false,
@@ -24,7 +24,7 @@ exports.getAllUsuarios = (req, res) => {
 exports.getUsuarioById = (req, res) => {
   const id = req.params.id;
   
-  connection.query('SELECT id, nombre, apellido, usuario, rol_id, fecha_registro FROM centro_medico_db_usuarios WHERE id = ?', 
+  connection.query('SELECT id, nombre, apellido, usuario, rol_id, fecha_registro FROM usuarios WHERE id = ?', 
   [id], (error, results) => {
     if (error) {
       return res.status(500).json({
@@ -80,7 +80,7 @@ exports.createUsuario = (req, res) => {
       fecha_registro: new Date()
     };
     
-    connection.query('INSERT INTO centro_medico_db_usuarios SET ?', newUser, (error, results) => {
+    connection.query('INSERT INTO usuarios SET ?', newUser, (error, results) => {
       if (error) {
         return res.status(500).json({
           status: false,
@@ -104,7 +104,7 @@ exports.updateUsuario = (req, res) => {
   const { nombre, apellido, usuario, contrasena, rol_id } = req.body;
   
   // Validate user exists
-  connection.query('SELECT * FROM centro_medico_db_usuarios WHERE id = ?', [id], (error, results) => {
+  connection.query('SELECT * FROM usuarios WHERE id = ?', [id], (error, results) => {
     if (error) {
       return res.status(500).json({
         status: false,
@@ -141,7 +141,7 @@ exports.updateUsuario = (req, res) => {
         
         updateUser.contrasena = hash;
         
-        connection.query('UPDATE centro_medico_db_usuarios SET ? WHERE id = ?', [updateUser, id], (error, results) => {
+        connection.query('UPDATE usuarios SET ? WHERE id = ?', [updateUser, id], (error, results) => {
           if (error) {
             return res.status(500).json({
               status: false,
@@ -159,7 +159,7 @@ exports.updateUsuario = (req, res) => {
       });
     } else {
       // Update without changing password
-      connection.query('UPDATE centro_medico_db_usuarios SET ? WHERE id = ?', [updateUser, id], (error, results) => {
+      connection.query('UPDATE usuarios SET ? WHERE id = ?', [updateUser, id], (error, results) => {
         if (error) {
           return res.status(500).json({
             status: false,
@@ -182,7 +182,7 @@ exports.updateUsuario = (req, res) => {
 exports.deleteUsuario = (req, res) => {
   const id = req.params.id;
   
-  connection.query('DELETE FROM centro_medico_db_usuarios WHERE id = ?', [id], (error, results) => {
+  connection.query('DELETE FROM usuarios WHERE id = ?', [id], (error, results) => {
     if (error) {
       return res.status(500).json({
         status: false,

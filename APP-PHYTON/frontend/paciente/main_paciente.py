@@ -116,7 +116,6 @@ class PacienteApp(QWidget):
             checkbox.setChecked(False)
 
     def realizar_diagnostico(self, sintomas):
-        # Aquí puedes definir las reglas para el diagnóstico
         if "Fiebre" in sintomas and "Tos" in sintomas and "Falta de aire" in sintomas:
             return "Posible COVID-19", "Consulte a un médico y realice una prueba de COVID-19"
         elif "Dolor de cabeza" in sintomas and "Cansancio" in sintomas and "Dolor muscular" in sintomas:

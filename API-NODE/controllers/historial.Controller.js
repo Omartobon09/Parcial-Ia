@@ -2,7 +2,7 @@ const mysql = require('mysql');
 
 
 exports.getAllHistoriales = (req, res) => {
-  connection.query('SELECT * FROM centro_medico_db_historial', (error, results) => {
+  connection.query('SELECT * FROM historial', (error, results) => {
     if (error) {
       return res.status(500).json({
         status: false,
@@ -23,7 +23,7 @@ exports.getAllHistoriales = (req, res) => {
 exports.getHistorialById = (req, res) => {
   const id = req.params.id;
   
-  connection.query('SELECT * FROM centro_medico_db_historial WHERE id = ?', [id], (error, results) => {
+  connection.query('SELECT * FROM historial WHERE id = ?', [id], (error, results) => {
     if (error) {
       return res.status(500).json({
         status: false,
@@ -51,7 +51,7 @@ exports.getHistorialById = (req, res) => {
 exports.getHistorialByUsuario = (req, res) => {
   const usuarioId = req.params.usuarioId;
   
-  connection.query('SELECT * FROM centro_medico_db_historial WHERE usuario_id = ? ORDER BY fecha DESC', 
+  connection.query('SELECT * FROM historial WHERE usuario_id = ? ORDER BY fecha DESC', 
   [usuarioId], (error, results) => {
     if (error) {
       return res.status(500).json({
@@ -87,7 +87,7 @@ exports.createHistorial = (req, res) => {
     fecha: new Date()
   };
   
-  connection.query('INSERT INTO centro_medico_db_historial SET ?', newHistorial, (error, results) => {
+  connection.query('INSERT INTO historial SET ?', newHistorial, (error, results) => {
     if (error) {
       return res.status(500).json({
         status: false,
@@ -110,7 +110,7 @@ exports.updateHistorial = (req, res) => {
   const { usuario_id, descripcion, fecha } = req.body;
   
   // Validate historial exists
-  connection.query('SELECT * FROM centro_medico_db_historial WHERE id = ?', [id], (error, results) => {
+  connection.query('SELECT * FROM historial WHERE id = ?', [id], (error, results) => {
     if (error) {
       return res.status(500).json({
         status: false,
@@ -133,7 +133,7 @@ exports.updateHistorial = (req, res) => {
     if (descripcion) updateHistorial.descripcion = descripcion;
     if (fecha) updateHistorial.fecha = fecha;
     
-    connection.query('UPDATE centro_medico_db_historial SET ? WHERE id = ?', 
+    connection.query('UPDATE historial SET ? WHERE id = ?', 
     [updateHistorial, id], (error, results) => {
       if (error) {
         return res.status(500).json({
@@ -156,7 +156,7 @@ exports.updateHistorial = (req, res) => {
 exports.deleteHistorial = (req, res) => {
   const id = req.params.id;
   
-  connection.query('DELETE FROM centro_medico_db_historial WHERE id = ?', [id], (error, results) => {
+  connection.query('DELETE FROM historial WHERE id = ?', [id], (error, results) => {
     if (error) {
       return res.status(500).json({
         status: false,
